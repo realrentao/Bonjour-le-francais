@@ -12,7 +12,7 @@
 <footer><div class="wrap"><span class="brand"><img src="assets/logo-piano.jpg" alt="涛子办事处" class="footer-logo">涛子办事处</span></div></footer>
 <script>let SLOW = false;
 function audioUrl(key){ return '../audio/'+key+(SLOW?'.slow':'')+'.mp3'; }
-function playKey(key){ if(!key) return; new Audio(audioUrl(key)).play(); }
+function playKey(key){ if(!key) return; if(window.__curAudio){try{window.__curAudio.pause();}catch(e){}} window.__curAudio=new Audio(audioUrl(key)); window.__curAudio.onended=function(){window.__curAudio=null;}; window.__curAudio.play().catch(function(){}); }
 function playFr(btn){ const k=btn.getAttribute('data-k'); if(k) playKey(k); }
 function setSlow(on){ SLOW=on; document.querySelectorAll('.switch').forEach(s=>s.classList.toggle('on',on)); }
 document.addEventListener('DOMContentLoaded',()=>{
