@@ -53,6 +53,8 @@ a{color:var(--bleu);text-decoration:none}
 .speak:hover{background:#1d6fc4}
 .speak.slow{background:var(--rouge)}
 .speak.slow:hover{background:#c9352b}
+.playing{background:#fff3cd;border-radius:6px;box-shadow:0 0 0 2px rgba(240,173,78,.55);transition:background .2s}
+tr.playing{background:#fff3cd;box-shadow:none}
 .toolbar{position:sticky;top:56px;z-index:20;background:#fff;border-bottom:1px solid var(--line);padding:8px 0}
 .toolbar .wrap{display:flex;align-items:center;gap:12px}
 .toggle{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
