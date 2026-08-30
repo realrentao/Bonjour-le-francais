@@ -1,0 +1,58 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tableau de conjugaison · 你好！法语 2 · A2</title>
+<link rel="stylesheet" href="../style.css"></head>
+<body data-lesson="a2-a-conjugaison">
+<div class="topbar"><div class="wrap"><div class="brand">Bonjour <span class="r">Français</span></div>
+<div class="crumbs"><a href="../index.html">首页</a> / <a href="index.html">你好！法语 2 · A2</a> / Tableau de conjugaison</div></div></div>
+<div class="toolbar"><div class="wrap"><span>慢速朗读</span><div class="switch" onclick="setSlow(!SLOW)"></div>
+<span style="margin-left:auto;color:var(--muted);font-size:13px">点击 🔊 听发音</span></div></div>
+<div class="lesson-head"><div class="wrap"><h1>Tableau de conjugaison</h1>
+<div class="sub">动词变位表</div></div></div>
+<div class="wrap">
+<div class="section"><p style="color:var(--muted)">A2 高频动词变位总表。</p></div>
+<div class="section"><h2><span class="dot"></span>变位</h2><table class="gtab"><tbody><tr><th>être (imp.)</th><td>étais / étais / était / étions / étiez / étaient <button class="speak" data-k="49575c374ffd2033" onclick="playFr(this)">🔊</button></td></tr><tr><th>avoir (imp.)</th><td>avais / avais / avait / avions / aviez / avaient <button class="speak" data-k="332ce9ad73b0a450" onclick="playFr(this)">🔊</button></td></tr><tr><th>faire (imp.)</th><td>faisais / faisais / faisait / faisions / faziez / faisaient <button class="speak" data-k="cd4229a3fd799c20" onclick="playFr(this)">🔊</button></td></tr><tr><th>aller (fut. simple)</th><td>irai / iras / ira / irons / irez / iront <button class="speak" data-k="31dd3ab8e3566fd1" onclick="playFr(this)">🔊</button></td></tr><tr><th>pouvoir (cond.)</th><td>pourrais / pourrais / pourrait / pourrions / pourriez / pourraient <button class="speak" data-k="1dd16943312ff7eb" onclick="playFr(this)">🔊</button></td></tr><tr><th>vouloir (cond.)</th><td>voudrais / voudrais / voudrait / voudrions / voudriez / voudraient <button class="speak" data-k="e81126927677f777" onclick="playFr(this)">🔊</button></td></tr><tr><th>devoir (cond.)</th><td>devrais / devrais / devrait / devrions / devriez / devraient <button class="speak" data-k="36f309ddad61a86e" onclick="playFr(this)">🔊</button></td></tr><tr><th>savoir (imp.)</th><td>savais / savais / savait / savions / saviez / savaient <button class="speak" data-k="4523104b3e5430b6" onclick="playFr(this)">🔊</button></td></tr><tr><th>venir (p.comp.)</th><td>suis venu(e) / es venu(e) / est venu(e) / sommes venu(es) / êtes venu(es) / sont venu(es) <button class="speak" data-k="20b856f2e9c1fc60" onclick="playFr(this)">🔊</button></td></tr><tr><th>prendre (p.comp.)</th><td>ai pris / as pris / a pris / avons pris / avez pris / ont pris <button class="speak" data-k="216571df2645d286" onclick="playFr(this)">🔊</button></td></tr></tbody></table></div>
+<div class="wrap" style="display:flex;gap:12px;margin:18px 0"><a class="btn" href="index.html">← 返回目录</a></div>
+</div>
+<footer><div class="wrap"><span>基于《你好！法语》OCR 重建 · edge-tts 配音</span><span>涛子办事处</span></div></footer>
+<script>let SLOW = false;
+function audioUrl(key){ return '../audio/'+key+(SLOW?'.slow':'')+'.mp3'; }
+function playKey(key){ if(!key) return; new Audio(audioUrl(key)).play(); }
+function playFr(btn){ const k=btn.getAttribute('data-k'); if(k) playKey(k); }
+function setSlow(on){ SLOW=on; document.querySelectorAll('.switch').forEach(s=>s.classList.toggle('on',on)); }
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.switch').forEach(s=>s.addEventListener('click',()=>setSlow(!SLOW)));
+  try{ const p=JSON.parse(localStorage.getItem('fr_progress')||'{}'); applyProgress(p);}catch(e){}
+  const lid=document.body.getAttribute('data-lesson'); if(lid){ markVisited(lid); }
+});
+function markVisited(lid){ let p=readP(); p[lid]=Object.assign(p[lid]||{},{visited:true}); writeP(p); }
+function readP(){ try{return JSON.parse(localStorage.getItem('fr_progress')||'{}');}catch(e){return {};} }
+function writeP(p){ localStorage.setItem('fr_progress',JSON.stringify(p)); }
+function applyProgress(p){
+  document.querySelectorAll('.lrow').forEach(r=>{
+    const id=r.getAttribute('data-lesson'); if(!id) return;
+    const st=p[id]; if(st&&st.visited){ const b=r.querySelector('.prog'); if(b) b.textContent='已学 ✓'; }
+  });
+  document.querySelectorAll('.pbar > i').forEach(bar=>{
+    const book=bar.getAttribute('data-book'); if(!book) return;
+    const keys=JSON.parse(bar.getAttribute('data-keys')||'[]');
+    const done=keys.filter(k=>p[k]&&p[k].visited).length;
+    bar.style.width=(keys.length?Math.round(done/keys.length*100):0)+'%';
+  });
+}
+function checkChoice(btn,idx,correct,ex){
+  const opts=ex.querySelectorAll('.opt');
+  opts.forEach((o,i)=>{ o.style.pointerEvents='none';
+    if(i===correct) o.classList.add('correct'); if(i===idx&&i!==correct) o.classList.add('wrong'); });
+  const fb=ex.querySelector('.fb');
+  if(idx===correct){ fb.textContent='✓ 正确！'; fb.className='fb ok'; }
+  else { fb.textContent='✗ 正确答案：'+ex.querySelectorAll('.opt')[correct].textContent.trim(); fb.className='fb bad'; }
+}
+function checkFill(btn,ans,ex){
+  const inp=ex.querySelector('.fill'); const fb=ex.querySelector('.fb');
+  const ok=inp.value.trim().toLowerCase()===ans.toLowerCase();
+  if(ok){ fb.textContent='✓ 正确！'; fb.className='fb ok'; inp.classList.add('correct'); }
+  else { fb.textContent='✗ 正确答案：'+ans; fb.className='fb bad'; }
+}
+</script>
+</body></html>

@@ -1,0 +1,52 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>法语学习 · 你好！法语系列</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="topbar"><div class="wrap"><div class="brand">Bonjour <span class="r">Français</span></div>
+<div class="crumbs">法语学习主页</div></div></div>
+<div class="hero"><div class="wrap"><h1>法语学习站</h1>
+<p>基于《你好！法语》1–4 册（A1–B2）OCR 重建，含真人配音、词汇语法、听力阅读与进度跟踪。A1、A2、B1、B2 全册均已上线，按真实教材目录编排。</p>
+<div class="flags"><span style="background:#0055A4"></span><span style="background:#fff;border:1px solid #ccc"></span><span style="background:#EF4135"></span></div>
+</div></div>
+<div class="wrap"><div class="grid"><a class="card" href="a1/index.html" style="text-decoration:none;color:inherit"><h3>你好！法语 1 · A1</h3><div class="meta">40 课 · 已上线</div><span class="badge">进入学习 →</span></a><a class="card" href="a2/index.html" style="text-decoration:none;color:inherit"><h3>你好！法语 2 · A2</h3><div class="meta">36 课 · 已上线</div><span class="badge">进入学习 →</span></a><a class="card" href="b1/index.html" style="text-decoration:none;color:inherit"><h3>你好法语 3 · B1</h3><div class="meta">24 课 · 已上线</div><span class="badge">进入学习 →</span></a><a class="card" href="b2/index.html" style="text-decoration:none;color:inherit"><h3>你好法语 4 · B2</h3><div class="meta">24 课 · 已上线</div><span class="badge">进入学习 →</span></a></div></div>
+<footer><div class="wrap"><span>基于《你好！法语》OCR 重建 · edge-tts 配音</span><span>涛子办事处 · 每日五个法语单词</span></div></footer>
+<script>let SLOW = false;
+function audioUrl(key){ return '../audio/'+key+(SLOW?'.slow':'')+'.mp3'; }
+function playKey(key){ if(!key) return; new Audio(audioUrl(key)).play(); }
+function playFr(btn){ const k=btn.getAttribute('data-k'); if(k) playKey(k); }
+function setSlow(on){ SLOW=on; document.querySelectorAll('.switch').forEach(s=>s.classList.toggle('on',on)); }
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.switch').forEach(s=>s.addEventListener('click',()=>setSlow(!SLOW)));
+  try{ const p=JSON.parse(localStorage.getItem('fr_progress')||'{}'); applyProgress(p);}catch(e){}
+  const lid=document.body.getAttribute('data-lesson'); if(lid){ markVisited(lid); }
+});
+function markVisited(lid){ let p=readP(); p[lid]=Object.assign(p[lid]||{},{visited:true}); writeP(p); }
+function readP(){ try{return JSON.parse(localStorage.getItem('fr_progress')||'{}');}catch(e){return {};} }
+function writeP(p){ localStorage.setItem('fr_progress',JSON.stringify(p)); }
+function applyProgress(p){
+  document.querySelectorAll('.lrow').forEach(r=>{
+    const id=r.getAttribute('data-lesson'); if(!id) return;
+    const st=p[id]; if(st&&st.visited){ const b=r.querySelector('.prog'); if(b) b.textContent='已学 ✓'; }
+  });
+  document.querySelectorAll('.pbar > i').forEach(bar=>{
+    const book=bar.getAttribute('data-book'); if(!book) return;
+    const keys=JSON.parse(bar.getAttribute('data-keys')||'[]');
+    const done=keys.filter(k=>p[k]&&p[k].visited).length;
+    bar.style.width=(keys.length?Math.round(done/keys.length*100):0)+'%';
+  });
+}
+function checkChoice(btn,idx,correct,ex){
+  const opts=ex.querySelectorAll('.opt');
+  opts.forEach((o,i)=>{ o.style.pointerEvents='none';
+    if(i===correct) o.classList.add('correct'); if(i===idx&&i!==correct) o.classList.add('wrong'); });
+  const fb=ex.querySelector('.fb');
+  if(idx===correct){ fb.textContent='✓ 正确！'; fb.className='fb ok'; }
+  else { fb.textContent='✗ 正确答案：'+ex.querySelectorAll('.opt')[correct].textContent.trim(); fb.className='fb bad'; }
+}
+function checkFill(btn,ans,ex){
+  const inp=ex.querySelector('.fill'); const fb=ex.querySelector('.fb');
+  const ok=inp.value.trim().toLowerCase()===ans.toLowerCase();
+  if(ok){ fb.textContent='✓ 正确！'; fb.className='fb ok'; inp.classList.add('correct'); }
+  else { fb.textContent='✗ 正确答案：'+ans; fb.className='fb bad'; }
+}
+</script></body></html>
