@@ -4,7 +4,7 @@
 <body>
 <div class="topbar"><div class="wrap"><div class="brand">Bonjour <span class="r">Français</span></div>
 <div class="crumbs"><a href="../index.html">首页</a> / 你好法语 4 · B2</div></div></div>
-<div class="toolbar"><div class="wrap"><span>慢速朗读</span><div class="switch" onclick="setSlow(!SLOW)"></div>
+<div class="toolbar"><div class="wrap"><span id="slowLabel">慢速朗读：关</span><div class="switch" id="slowSwitch"></div>
 <span style="margin-left:auto;color:var(--muted);font-size:13px">点击 🔊 听发音</span></div></div>
 <div class="hero"><div class="wrap"><h1>你好法语 4 · B2</h1>
 <p>共 24 课 + 6 附录。点击进入每课学习，蓝色进度条记录完成情况。</p>
@@ -15,9 +15,9 @@
 function audioUrl(key){ return '../audio/'+key+(SLOW?'.slow':'')+'.mp3'; }
 function playKey(key){ if(!key) return; new Audio(audioUrl(key)).play(); }
 function playFr(btn){ const k=btn.getAttribute('data-k'); if(k) playKey(k); }
-function setSlow(on){ SLOW=on; document.querySelectorAll('.switch').forEach(s=>s.classList.toggle('on',on)); }
-document.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.switch').forEach(s=>s.addEventListener('click',()=>setSlow(!SLOW)));
+function setSlow(on){ SLOW=on; document.querySelectorAll('.switch').forEach(s=>s.classList.toggle('on',on)); const l=document.getElementById('slowLabel'); if(l) l.textContent='慢速朗读：'+(on?'开':'关'); }
+document.querySelectorAll('.switch').forEach(s=>s.addEventListener('click',()=>setSlow(!SLOW)));
+ document.addEventListener('DOMContentLoaded',()=>{
   try{ const p=JSON.parse(localStorage.getItem('fr_progress')||'{}'); applyProgress(p);}catch(e){}
   const lid=document.body.getAttribute('data-lesson'); if(lid){ markVisited(lid); }
 });
