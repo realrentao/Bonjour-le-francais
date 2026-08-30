@@ -92,7 +92,7 @@ a{color:var(--bleu);text-decoration:none}
 .gtab th{background:var(--soft);color:var(--bleu)}
 .tag{display:inline-block;background:var(--bleu);color:#fff;border-radius:6px;padding:1px 8px;font-size:12px;margin:2px}
 footer{background:#fff;border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:22px 0;margin-top:30px}
-footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer .wrap{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;text-align:center}
 footer .brand{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--text)}
 .footer-logo{height:26px;width:auto;vertical-align:middle;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 @media (max-width:768px){
